@@ -1,5 +1,5 @@
 # Pomodoro-web
-Simple web with the Pomodoro Method
+Simple web with the Pomodoro Method, the actual date and time.
 
 ## Table of contents
 * [What is Pomodoro?](##what-is-pomodoro)
