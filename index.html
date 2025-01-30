@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="estilos/estilos.css" rel="stylesheet">
+    <title>Pomodoro</title>
+</head>
+<body onload="mostrarReloj()">
+    <header>
+        <h1>Pomodoro</h1>
+        <p>Aplicación web Pomodoro para gestionar tu tiempo a través de esta metodología</p>
+    </header>
+
+    <main>
+        <div id="hora-fecha">
+            <div>Hora y fecha actual:</div>
+            <div id="hora"></div>
+            <div id="fecha"></div>
+        </div>
+
+        <div id="pomodoro">
+            <div id="cuenta-atras"></div>
+            <input type="range" id="rango" min="10" max="120" step="5" value="10" oninput="actualizarValor(this.value);">
+            <div id="botones-internos">
+                <button onclick="empezarPomodoro()" id="empezar">Empezar</button>
+                <button onclick="continuarPomodoro()" id="continuar" style="display: none;">Continuar</button>
+                <button onclick="pausarPomodoro()">Pausar</button>
+                <button onclick="terminarPomodoro()">Terminar</button>
+            </div>
+        </div>
+
+        <div id="botones">
+            <button onclick="pomodoro(1)">15 minutos</button>
+            <button onclick="pomodoro(2)">20 minutos</button>
+            <button onclick="pomodoro(3)">30 minutos</button>
+            <button onclick="pomodoro(4)">60 minutos</button>
+            <button onclick="pomodoro(5)">90 minutos</button>
+            <button onclick="pomodoro(6)">Personalizar</button>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
