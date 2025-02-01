@@ -1,4 +1,7 @@
 // TODO mirar porqué tarda tanto en reanudarse el pomodoro
+// TODO hacer funcionales los descansos
+// TODO hacer que los DIVs de pomodoros y descansos sumen cuando se terminen
+// TODO hacer documentacion de las funciones
 
 const mostrarReloj = () => {
     let fecha = new Date();
@@ -27,46 +30,79 @@ const formatoHora = (hora) => {
 
 setInterval(mostrarReloj, 1000);
 
-function actualizarValor(valor){
-    document.getElementById("cuenta-atras").innerHTML = valor + ":00";
+function actualizarValor(valor, num){
+    if(num == 1){
+        document.getElementById("tiempo-pomodoro").innerHTML = valor + ":00";
+    } else if(num == 2){
+        document.getElementById("descanso-corto").innerHTML = valor + ":00";
+    } else if(num == 3){
+        document.getElementById("descanso-largo").innerHTML = valor + ":00";
+    }
 }
 
 function pomodoro(valor){
     switch(valor){
         case 1:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: none";
-            document.getElementById("cuenta-atras").innerHTML = "15:00";
+            document.getElementById("rango1").style = "display: none";
+            document.getElementById("rango2").style = "display: none";
+            document.getElementById("rango3").style = "display: none";
+            document.getElementById("tiempo-pomodoro").innerHTML = "15:00";
+            document.getElementById("descanso-corto").innerHTML = "5:00";
+            document.getElementById("descanso-largo").innerHTML = "10:00";
             break;
 
         case 2:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: none";
-            document.getElementById("cuenta-atras").innerHTML = "20:00";
+            document.getElementById("rango1").style = "display: none";
+            document.getElementById("rango2").style = "display: none";
+            document.getElementById("rango3").style = "display: none";
+            document.getElementById("tiempo-pomodoro").innerHTML = "20:00";
+            document.getElementById("descanso-corto").innerHTML = "5:00";
+            document.getElementById("descanso-largo").innerHTML = "10:00";
             break;
 
         case 3:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: none";
-            document.getElementById("cuenta-atras").innerHTML = "30:00";
+            document.getElementById("rango1").style = "display: none";
+            document.getElementById("rango2").style = "display: none";
+            document.getElementById("rango3").style = "display: none";
+            document.getElementById("tiempo-pomodoro").innerHTML = "30:00";
+            document.getElementById("descanso-corto").innerHTML = "5:00";
+            document.getElementById("descanso-largo").innerHTML = "15:00";
             break;
 
         case 4:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: none";
-            document.getElementById("cuenta-atras").innerHTML = "60:00";
+            document.getElementById("rango1").style = "display: none";
+            document.getElementById("rango2").style = "display: none";
+            document.getElementById("rango3").style = "display: none";
+            document.getElementById("tiempo-pomodoro").innerHTML = "60:00";
+            document.getElementById("descanso-corto").innerHTML = "8:00";
+            document.getElementById("descanso-largo").innerHTML = "20:00";
             break;
 
         case 5:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: none";
-            document.getElementById("cuenta-atras").innerHTML = "90:00";
+            document.getElementById("rango1").style = "display: none";
+            document.getElementById("rango2").style = "display: none";
+            document.getElementById("rango3").style = "display: none";
+            document.getElementById("tiempo-pomodoro").innerHTML = "90:00";
+            document.getElementById("descanso-corto").innerHTML = "15:00";
+            document.getElementById("descanso-largo").innerHTML = "25:00";
             break;
 
         case 6:
             document.getElementById("pomodoro").style = "display: block";
-            document.getElementById("rango").style = "display: inline";
-            document.getElementById("cuenta-atras").innerHTML = "10:00";
+            document.getElementById("descanso-corto").style = "display: inline-block";
+            document.getElementById("descanso-largo").style = "display: inline-block";
+            document.getElementById("rango1").style = "display: inline";
+            document.getElementById("rango2").style = "display: inline";
+            document.getElementById("rango3").style = "display: inline";
+            document.getElementById("tiempo-pomodoro").innerHTML = "15:00";
+            document.getElementById("descanso-corto").innerHTML = "5:00";
+            document.getElementById("descanso-largo").innerHTML = "5:00";
+            
 
 
     }
@@ -78,7 +114,9 @@ function empezarPomodoro(){
     var inicio = 59;
 
     document.getElementById("botones").style = "display: none";
-    var duracion = document.getElementById("cuenta-atras").innerHTML;
+    document.getElementById("descanso-corto").style = "display: none";
+    document.getElementById("descanso-largo").style = "display: none";
+    var duracion = document.getElementById("tiempo-pomodoro").innerHTML;
     var [minutos, segundos] = duracion.split(":");
 
     var pausaSecs = false;
@@ -102,9 +140,9 @@ function empezarPomodoro(){
             
         segundos = inicio - contador;
         if(segundos < 10){
-            document.getElementById("cuenta-atras").innerHTML = minutos + ":0" + segundos;
+            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":0" + segundos;
         }else{
-            document.getElementById("cuenta-atras").innerHTML = minutos + ":" + segundos;
+            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":" + segundos;
         }
     
         contador++;
@@ -128,7 +166,7 @@ function pausarPomodoro(){
 }
 
 function continuarPomodoro(){
-    var duracion = document.getElementById("cuenta-atras").innerHTML;
+    var duracion = document.getElementById("tiempo-pomodoro").innerHTML;
     var [minutos, segundos] = duracion.split(":");
 
     var pausaSecs = true;
@@ -155,9 +193,9 @@ function continuarPomodoro(){
         segundos = inicio - contador;
 
         if(segundos < 10){
-            document.getElementById("cuenta-atras").innerHTML = minutos + ":0" + segundos;
+            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":0" + segundos;
         }else{
-            document.getElementById("cuenta-atras").innerHTML = minutos + ":" + segundos;
+            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":" + segundos;
         }
     
         contador++;
@@ -176,5 +214,7 @@ function terminarPomodoro(){
     document.getElementById("continuar").style = "display: none";
     document.getElementById("pomodoro").style = "display: none";
     document.getElementById("botones").style = "display: block";
+    document.getElementById("descanso-corto").style = "display: inline";
+    document.getElementById("descanso-largo").style = "display: inline";
 }
 

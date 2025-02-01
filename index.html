@@ -10,18 +10,24 @@
     <header>
         <h1>Pomodoro</h1>
         <p>Aplicación web Pomodoro para gestionar tu tiempo a través de esta metodología</p>
+        <p>Se hará un descanso corto entre cada pomodoro y un descanso largo cada 4 pomodoros</p>
     </header>
 
     <main>
-        <div id="hora-fecha">
-            <div>Hora y fecha actual:</div>
-            <div id="hora"></div>
-            <div id="fecha"></div>
+        <div id="stats">
+            <button>Pomodoros: </button>
+            <button>Descansos cortos: </button>
+            <button>Descansos largos: </button>
         </div>
 
         <div id="pomodoro">
-            <div id="cuenta-atras"></div>
-            <input type="range" id="rango" min="10" max="120" step="5" value="10" oninput="actualizarValor(this.value);">
+            <div id="tiempo-pomodoro"></div>
+            <input type="range" id="rango1" min="10" max="120" step="5" value="10" oninput="actualizarValor(this.value, 1);">
+            <div id="descanso-corto"></div>
+            <input type="range" id="rango2" min="5" max="90" step="1" value="5" oninput="actualizarValor(this.value, 2);">
+            <div id="descanso-largo"></div>            
+            <input type="range" id="rango3" min="5" max="90" step="1" value="5" oninput="actualizarValor(this.value, 3);">
+
             <div id="botones-internos">
                 <button onclick="empezarPomodoro()" id="empezar">Empezar</button>
                 <button onclick="continuarPomodoro()" id="continuar" style="display: none;">Continuar</button>
@@ -41,7 +47,11 @@
     </main>
 
     <footer>
-
+        <div id="hora-fecha">
+            <div>Hora y fecha actual:</div>
+            <div id="hora"></div>
+            <div id="fecha"></div>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>
