@@ -3,13 +3,18 @@
 // TODO hacer que los DIVs de pomodoros y descansos sumen cuando se terminen
 // TODO hacer documentacion de las funciones
 
+//Variables globales con IDs de SetInterval, para pausar y terminar pomodoros y descansos
+var idPomodoro;
+var idDescansoCorto;
+var idDescansoLargo;
+
+//Función para mostrar la hora y fecha
 const mostrarReloj = () => {
     let fecha = new Date();
     let hora = formatoHora(fecha.getHours());
     let minuto = formatoHora(fecha.getMinutes());
-    let segundo = formatoHora(fecha.getSeconds());
 
-    document.getElementById("hora").innerHTML = `${hora}:${minuto}:${segundo}`;
+    document.getElementById("hora").innerHTML = `${hora}:${minuto}`;
 
     const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"];
     const dias = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
@@ -21,6 +26,7 @@ const mostrarReloj = () => {
     document.getElementById("fecha").innerHTML = `${diaSemana}, ${dia} ${mes} ${anio}`;
 }
 
+//Función para dar formato a la hora
 const formatoHora = (hora) => {
     if(hora < 10){
         hora = '0' + hora;
@@ -28,8 +34,11 @@ const formatoHora = (hora) => {
     return hora;
 }
 
+// Intervalo para la hora
 setInterval(mostrarReloj, 1000);
 
+
+// Función para actualizar valores en los pomodoros personalizados
 function actualizarValor(valor, num){
     if(num == 1){
         document.getElementById("tiempo-pomodoro").innerHTML = valor + ":00";
@@ -40,6 +49,9 @@ function actualizarValor(valor, num){
     }
 }
 
+
+// Función que actualiza el pomodoro y los descansos correspondientes
+// en función del pomodoro escogido
 function pomodoro(valor){
     switch(valor){
         case 1:
@@ -102,16 +114,25 @@ function pomodoro(valor){
             document.getElementById("tiempo-pomodoro").innerHTML = "15:00";
             document.getElementById("descanso-corto").innerHTML = "5:00";
             document.getElementById("descanso-largo").innerHTML = "5:00";
-            
-
-
     }
 }
 
-var idIntervalo;
 
+// Función que comienza el pomodoro y realiza la cuenta atrás
+// TODO hacer funcional para el pomodoro, descanso corto y descanso largo
 function empezarPomodoro(){
     var inicio = 59;
+
+    // Intento de reciclado del código, afecta a las funciones: pausarPomodoro() y terminarPomodoro()
+    // Revisar con calma y hacer los ajustes necesarios.
+
+    /*if(document.getElementById("empezar").id){
+        document.getElementById("empezar").id = "empezarDC";
+    }else if(document.getElementById("empezarDC").id){
+        document.getElementById("empezarDC").id = "empezarDL";
+    }else{
+        document.getElementById("empezarDL").id = "empezar";
+    }*/
 
     document.getElementById("botones").style = "display: none";
     document.getElementById("descanso-corto").style = "display: none";
@@ -125,7 +146,12 @@ function empezarPomodoro(){
     minutos = parseInt(minutos);
     segundos = parseInt(segundos);
 
-    idIntervalo = setInterval(pomodoro, 1000);
+    if(segundos != 0){
+        inicio = segundos;
+        pausaSecs = true;
+    }
+
+    idPomodoro = setInterval(pomodoro, 1000);
 
     function pomodoro() {
         
@@ -135,7 +161,8 @@ function empezarPomodoro(){
         }
 
         if(minutos < 0){
-            pausarPomodoro();
+            terminarPomodoro();
+            alert("Has terminado el pomodoro");
         }
             
         segundos = inicio - contador;
@@ -151,65 +178,24 @@ function empezarPomodoro(){
             pausaSecs = false;
             contador = 0;
         }
-        
     }
-
 }
 
+// Función para pausar el pomodoro
+// Solo funciona si el pomodoro ha sido empezado
 function pausarPomodoro(){
-    if (typeof idIntervalo !== 'undefined'){
-        clearInterval(idIntervalo);
+    if (typeof idPomodoro !== 'undefined'){
+        clearInterval(idPomodoro);
         document.getElementById("empezar").style = "display: none";
         document.getElementById("continuar").style = "display: inline";
     }
     
 }
 
-function continuarPomodoro(){
-    var duracion = document.getElementById("tiempo-pomodoro").innerHTML;
-    var [minutos, segundos] = duracion.split(":");
-
-    var pausaSecs = true;
-    var contador = 0;
-
-    minutos = parseInt(minutos);
-    segundos = parseInt(segundos);
-
-    var inicio = segundos;
-
-    idIntervalo = setInterval(pomodoro, 1000);
-
-    function pomodoro() {
-        
-        if(!pausaSecs){
-            minutos = --minutos;
-            pausaSecs = true;
-        }
-
-        if(minutos < 0){
-            pausarPomodoro();
-        }
-            
-        segundos = inicio - contador;
-
-        if(segundos < 10){
-            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":0" + segundos;
-        }else{
-            document.getElementById("tiempo-pomodoro").innerHTML = minutos + ":" + segundos;
-        }
-    
-        contador++;
-    
-        if(contador > 59){
-            pausaSecs = false;
-            contador = 0;
-        }
-        
-    }
-}
-
+// Función para terminar el pomodoro
+// Oculta el apartado de pomodoro y vuelve a mostrar los botones
 function terminarPomodoro(){
-    clearInterval(idIntervalo);
+    clearInterval(idPomodoro);
     document.getElementById("empezar").style = "display: inline";
     document.getElementById("continuar").style = "display: none";
     document.getElementById("pomodoro").style = "display: none";
