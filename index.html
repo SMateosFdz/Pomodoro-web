@@ -15,21 +15,21 @@
 
     <main>
         <div id="stats">
-            <button>Pomodoros: </button>
-            <button>Descansos cortos: </button>
-            <button>Descansos largos: </button>
+            <button id="statP">Pomodoros: 0</button>
+            <button id="statDC">Descansos cortos: 0</button>
+            <button id="statDL">Descansos largos: 0</button>
         </div>
 
         <div id="pomodoro">
             <div id="tiempo-pomodoro"></div>
-            <input type="range" id="rango1" min="1" max="120" step="5" value="10" oninput="actualizarValor(this.value, 1);"> <!-- Prueba de funciones, cambiar el min a 10 de nuevo-->
+            <input type="range" id="rango1" min=1 max=120 step=1 value=10 oninput="actualizarValor(this.value, 1)"> <!--reajustar valores una vez termindas las pruebas-->
             <div id="descanso-corto"></div>
-            <input type="range" id="rango2" min="5" max="90" step="1" value="5" oninput="actualizarValor(this.value, 2);">
+            <input type="range" id="rango2" min=1 max=90 step=1 value=5 oninput="actualizarValor(this.value, 2)">
             <div id="descanso-largo"></div>            
-            <input type="range" id="rango3" min="5" max="90" step="1" value="5" oninput="actualizarValor(this.value, 3);">
+            <input type="range" id="rango3" min=5 max=90 step=1 value=5 oninput="actualizarValor(this.value, 3)">
 
             <div id="botones-internos">
-                <button onclick="empezarPomodoro()" id="empezar">Empezar</button>
+                <button onclick="empezarPomodoro()" id="empezar" name="comienzo">Empezar</button>
                 <button onclick="empezarPomodoro()" id="continuar" style="display: none;">Continuar</button>
                 <button onclick="pausarPomodoro()">Pausar</button>
                 <button onclick="terminarPomodoro()">Terminar</button>
