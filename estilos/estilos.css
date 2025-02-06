@@ -50,7 +50,7 @@ main{
 }
 
 #hora-fecha{
-    position: fixed;
+    position: flex;
     width: 100%;
     left: 0px;
     right: 0px;
