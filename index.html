@@ -21,12 +21,14 @@
         </div>
 
         <div id="pomodoro">
-            <div id="tiempo-pomodoro"></div>
-            <input type="range" id="rango1" min=1 max=120 step=1 value=10 oninput="actualizarValor(this.value, 1)"> <!--reajustar valores una vez termindas las pruebas-->
-            <div id="descanso-corto"></div>
-            <input type="range" id="rango2" min=1 max=90 step=1 value=5 oninput="actualizarValor(this.value, 2)">
-            <div id="descanso-largo"></div>            
-            <input type="range" id="rango3" min=5 max=90 step=1 value=5 oninput="actualizarValor(this.value, 3)">
+            <div id="contadores">
+                <div id="tiempo-pomodoro"></div>
+                <input type="range" id="rango1" min=1 max=120 step=1 value=10 oninput="actualizarValor(this.value, 1)"> <!--reajustar valores una vez termindas las pruebas-->
+                <div id="descanso-corto"></div>
+                <input type="range" id="rango2" min=1 max=90 step=1 value=5 oninput="actualizarValor(this.value, 2)">
+                <div id="descanso-largo"></div>            
+                <input type="range" id="rango3" min=5 max=90 step=1 value=5 oninput="actualizarValor(this.value, 3)">
+            </div>
 
             <div id="botones-internos">
                 <button onclick="empezarPomodoro()" id="empezar" name="comienzo">Empezar</button>

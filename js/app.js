@@ -1,12 +1,7 @@
-// TODO mirar porqué tarda tanto en reanudarse el pomodoro
-// TODO hacer funcionales los descansos
-// TODO hacer que los DIVs de pomodoros y descansos sumen cuando se terminen
 // TODO hacer documentacion de las funciones
-
+// TODO contador global para saber cuando pasar a un descanso largo
 //Variables globales con IDs de SetInterval, para pausar y terminar pomodoros y descansos
-var idPomodoro;
-var idDescansoCorto;
-var idDescansoLargo;
+var idPomodoro, contadorDL;
 
 //Función para mostrar la hora y fecha
 const mostrarReloj = () => {
@@ -56,6 +51,8 @@ function pomodoro(valor){
     switch(valor){
         case 1:
             document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("contadores").style.display = "inline";
+            document.getElementById("contadores").style.gridTemplateColumns = "none";
             document.getElementById("rango1").style = "display: none";
             document.getElementById("rango2").style = "display: none";
             document.getElementById("rango3").style = "display: none";
@@ -66,6 +63,8 @@ function pomodoro(valor){
 
         case 2:
             document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("contadores").style.display = "inline";
+            document.getElementById("contadores").style.gridTemplateColumns = "none";
             document.getElementById("rango1").style = "display: none";
             document.getElementById("rango2").style = "display: none";
             document.getElementById("rango3").style = "display: none";
@@ -76,6 +75,8 @@ function pomodoro(valor){
 
         case 3:
             document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("contadores").style.display = "inline";
+            document.getElementById("contadores").style.gridTemplateColumns = "none";
             document.getElementById("rango1").style = "display: none";
             document.getElementById("rango2").style = "display: none";
             document.getElementById("rango3").style = "display: none";
@@ -86,6 +87,8 @@ function pomodoro(valor){
 
         case 4:
             document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("contadores").style.display = "inline";
+            document.getElementById("contadores").style.gridTemplateColumns = "none";
             document.getElementById("rango1").style = "display: none";
             document.getElementById("rango2").style = "display: none";
             document.getElementById("rango3").style = "display: none";
@@ -96,6 +99,8 @@ function pomodoro(valor){
 
         case 5:
             document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("contadores").style.display = "inline";
+            document.getElementById("contadores").style.gridTemplateColumns = "none";
             document.getElementById("rango1").style = "display: none";
             document.getElementById("rango2").style = "display: none";
             document.getElementById("rango3").style = "display: none";
@@ -105,7 +110,9 @@ function pomodoro(valor){
             break;
 
         case 6:
-            document.getElementById("pomodoro").style = "display: block";
+            document.getElementById("pomodoro").style.display = "block";
+            document.getElementById("contadores").style.display = "grid";
+            document.getElementById("contadores").style.gridTemplateColumns = "repeat(2, 1fr)";
             document.getElementById("descanso-corto").style = "display: inline-block";
             document.getElementById("descanso-largo").style = "display: inline-block";
             document.getElementById("rango1").style = "display: inline";
@@ -120,10 +127,14 @@ function pomodoro(valor){
 
 // Función que comienza el pomodoro y realiza la cuenta atrás
 function empezarPomodoro(){
-    var inicio = 59;
 
     var boton = document.getElementsByName("comienzo")[0];
     var duracion, valor;
+
+    document.getElementById("rango1").style = "display: none";
+    document.getElementById("rango2").style = "display: none";
+    document.getElementById("rango3").style = "display: none";
+    document.getElementById("contadores").style.display = "block";
 
     if(boton.id == "empezar"){
         document.getElementById("empezar").id = "empezarDC";
@@ -153,47 +164,31 @@ function empezarPomodoro(){
 
     var [minutos, segundos] = duracion.split(":");
 
-    var pausaSecs = false;
-    var contador = 0;
-
     minutos = parseInt(minutos);
     segundos = parseInt(segundos);
-
-    if(segundos != 0){
-        inicio = segundos;
-        pausaSecs = true;
-    }
 
     idPomodoro = setInterval(pomodoro, 1000);
 
     function pomodoro() {
-        
-        if(!pausaSecs){
-            minutos = --minutos;
-            pausaSecs = true;
+
+        if(segundos === 0){
+            if(minutos === 0){
+                clearInterval(idPomodoro);
+                sumar(valor);
+                empezarPomodoro();
+                document.getElementsByName("comienzo")[0].style = "display: inline";
+                document.getElementById("continuar").style = "display: none";
+            }else{
+                minutos--;
+                segundos = 59;
+            }
+
+        }else{
+            segundos--;
         }
 
-        if(minutos < 0){
-            clearInterval(idPomodoro);
-            sumar(valor);
-            empezarPomodoro();
-            document.getElementsByName("comienzo")[0].style = "display: inline";
-            document.getElementById("continuar").style = "display: none";
-        }
-            
-        segundos = inicio - contador;
-        if(segundos < 10){
-            document.getElementById(valor).innerHTML = minutos + ":0" + segundos;
-        }else{
-            document.getElementById(valor).innerHTML = minutos + ":" + segundos;
-        }
-    
-        contador++;
-    
-        if(contador > 59){
-            pausaSecs = false;
-            contador = 0;
-        }
+        var tiempoFormateado = (minutos < 10 ? "0" + minutos : minutos) + ":" +  (segundos < 10 ? "0" + segundos : segundos);
+        document.getElementById(valor).innerHTML = tiempoFormateado;
     }
 }
 
