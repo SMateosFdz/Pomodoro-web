@@ -1,5 +1,7 @@
 // TODO hacer documentacion de las funciones
 // TODO contador global para saber cuando pasar a un descanso largo
+// TODO optimizar con funciones cambios visuales y de estilo
+
 //Variables globales con IDs de SetInterval, para pausar y terminar pomodoros y descansos
 var idPomodoro, contadorDL;
 
@@ -136,6 +138,15 @@ function empezarPomodoro(){
     document.getElementById("rango3").style = "display: none";
     document.getElementById("contadores").style.display = "block";
 
+    document.getElementsByName("comienzo")[0].setAttribute("disabled", "true");
+    document.getElementsByName("comienzo")[0].style.cursor = "not-allowed";
+    document.getElementsByName("comienzo")[0].style.opacity = 0.6;
+
+    document.getElementById("continuar").setAttribute("disabled", "true");
+    document.getElementById("continuar").style.cursor = "not-allowed";
+    document.getElementById("continuar").style.opacity = 0.6;
+
+
     if(boton.id == "empezar"){
         document.getElementById("empezar").id = "empezarDC";
         document.getElementById("descanso-corto").style = "display: none";
@@ -160,7 +171,8 @@ function empezarPomodoro(){
         valor = "descanso-largo";
     }
 
-    document.getElementById("botones").style = "display: none";
+    document.getElementById("botones").style = "visibility: hidden";
+    
 
     var [minutos, segundos] = duracion.split(":");
 
@@ -175,9 +187,10 @@ function empezarPomodoro(){
             if(minutos === 0){
                 clearInterval(idPomodoro);
                 sumar(valor);
-                empezarPomodoro();
+                document.getElementsByName("comienzo")[0].removeAttribute("disabled");
                 document.getElementsByName("comienzo")[0].style = "display: inline";
                 document.getElementById("continuar").style = "display: none";
+                empezarPomodoro();
             }else{
                 minutos--;
                 segundos = 59;
@@ -199,6 +212,7 @@ function pausarPomodoro(){
         clearInterval(idPomodoro);
         document.getElementsByName("comienzo")[0].style = "display: none";
         document.getElementById("continuar").style = "display: inline";
+        document.getElementById("continuar").removeAttribute("disabled");
 
         if(document.getElementsByName("comienzo")[0].id == "empezar"){
             document.getElementsByName("comienzo")[0].id = "empezarDL";
@@ -220,7 +234,11 @@ function terminarPomodoro(){
     clearInterval(idPomodoro);
     document.getElementsByName("comienzo")[0].style = "display: inline";
     document.getElementsByName("comienzo")[0].id = "empezar";
+    document.getElementsByName("comienzo")[0].removeAttribute("disabled");
+
     document.getElementById("continuar").style = "display: none";
+    document.getElementById("continuar").removeAttribute("disabled");
+
     document.getElementById("pomodoro").style = "display: none";
     document.getElementById("botones").style = "display: block";
     document.getElementById("tiempo-pomodoro").style = "display: inline";
