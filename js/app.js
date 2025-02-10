@@ -1,5 +1,4 @@
 // TODO hacer documentacion de las funciones
-// TODO contador global para saber cuando pasar a un descanso largo
 // TODO optimizar con funciones cambios visuales y de estilo
 // TODO modificar nombres de las nuevas funciones y optimizar el nuevo codigo si es posible
 
@@ -25,6 +24,9 @@ const mostrarReloj = () => {
     document.getElementById("fecha").innerHTML = `${diaSemana}, ${dia} ${mes} ${anio}`;
 }
 
+// Intervalo para la hora
+setInterval(mostrarReloj, 1000);
+
 //Función para dar formato a la hora
 const formatoHora = (hora) => {
     if(hora < 10){
@@ -32,10 +34,6 @@ const formatoHora = (hora) => {
     }
     return hora;
 }
-
-// Intervalo para la hora
-setInterval(mostrarReloj, 1000);
-
 
 // Función para actualizar valores en los pomodoros personalizados
 function actualizarValor(valor, num){
@@ -51,7 +49,7 @@ function actualizarValor(valor, num){
 
 // Función que actualiza el pomodoro y los descansos correspondientes
 // en función del pomodoro escogido
-function pomodoro(valor){
+function eleccionPomodoro(valor){
     switch(valor){
         case 1:
             document.getElementById("pomodoro").style = "display: block";
@@ -131,12 +129,12 @@ function pomodoro(valor){
 // Función que se llama con los botones "empezar" y "continuar"
 // Se tiene en cuenta el valor del contador global para el DL
 // Si DL != 0 no es necesario tomar los valores iniciales de pomodoro, DC y DL
-function pomodoroG(){
+function pomodoro(){
     if(contadorDL == 0){
         getValOriginal();
-        empezarPomodoro();
+        empezarPomodoro(1);
     }else{
-        empezarPomodoro();
+        empezarPomodoro(1);
     }
 }
 
@@ -149,7 +147,7 @@ function getValOriginal(){
 
 
 // Función que comienza el pomodoro y realiza la cuenta atrás
-function empezarPomodoro(){
+function empezarPomodoro(bandera){
 
     var boton = document.getElementsByName("comienzo")[0];
     var duracion, valor;
@@ -167,9 +165,10 @@ function empezarPomodoro(){
     document.getElementById("continuar").style.cursor = "not-allowed";
     document.getElementById("continuar").style.opacity = 0.6;
 
-    document.getElementById("tiempo-pomodoro").innerHTML = globalP;
-    document.getElementById("descanso-corto").innerHTML = globalDC;
-
+    if(bandera == 1){ // Necesario para que al pausar el pomodoro y se reanude no falle
+        document.getElementById("tiempo-pomodoro").innerHTML = globalP;
+        document.getElementById("descanso-corto").innerHTML = globalDC;
+    }
 
     if(boton.id == "empezar"){ //El pomodoro pasa a DC y DC a pomodoro hasta los 4 pomodoros
         contadorDL++;
@@ -199,18 +198,13 @@ function empezarPomodoro(){
         }
     }
 
-    console.log(contadorDL);
-
     document.getElementById("botones").style = "visibility: hidden";
-    
 
     var [minutos, segundos] = duracion.split(":");
-
     minutos = parseInt(minutos);
     segundos = parseInt(segundos);
 
     idPomodoro = setInterval(calculo, 1000);
-
     function calculo() {
 
         if(segundos === 0){
@@ -226,16 +220,13 @@ function empezarPomodoro(){
                 }else{
                     pomodoroG();
                 }
-
             }else{
                 minutos--;
                 segundos = 59;
             }
-
         }else{
             segundos--;
         }
-
         var tiempoFormateado = (minutos < 10 ? "0" + minutos : minutos) + ":" +  (segundos < 10 ? "0" + segundos : segundos);
         document.getElementById(valor).innerHTML = tiempoFormateado;
     }
@@ -255,11 +246,7 @@ function pausarPomodoro(){
 
         }else if(document.getElementsByName("comienzo")[0].id == "empezarDC"){
             document.getElementsByName("comienzo")[0].id = "empezar";
-
-        }else{
-            document.getElementsByName("comienzo")[0].id = "empezarDC";
         }
-
     }
     
 }
