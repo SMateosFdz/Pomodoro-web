@@ -18,6 +18,8 @@ main{
     flex: 1;
 }
 
+
+/*Div de estadísticas*/
 #stats{
     padding: 20px;
     max-width: 1000px;
@@ -46,33 +48,10 @@ main{
     /*cursor: pointer;*/
 }
 
+
+/*Div de pomodoro*/
 #pomodoro{
     display: none;
-}
-
-#pomodoro input{
-    display: none;
-    text-align: center;
-}
-
-#hora-fecha{
-    position: flex;
-    width: 100%;
-    left: 0px;
-    right: 0px;
-    bottom: 20px;
-    width: 30rem;
-    margin-inline: auto;
-    text-align: center;
-    border-radius: 5px;
-    background-color: rgb(223, 228, 228);
-    font-family: sans-serif;
-    font-size: 45px;
-    text-shadow: 0px 0px 1px black;
-    color: rgb(0, 0, 0);
-}
-
-#pomodoro{
     padding: 25px;
     max-width: 600px;
     text-align: center;
@@ -86,11 +65,20 @@ main{
     color: rgb(0, 0, 0);
 }
 
+#pomodoro input{
+    display: none;
+    text-align: center;
+}
+
+
+/*Divs de pomodoro, DC y DL*/
 #tiempo-pomodoro, #descanso-corto, #descanso-largo{
     margin-left: 20px;
     display: inline;
 }
 
+
+/*Botones de elección de pomodoro*/
 #botones{
     padding: 20px;
     max-width: 700px;
@@ -117,6 +105,8 @@ main{
     color:white;
 }
 
+
+/*Botones internos del pomodoro*/
 #botones-internos button{
     font-family: sans-serif;
     text-shadow: 0px 0px 1px black;
@@ -130,4 +120,23 @@ main{
     cursor: pointer;
     background-color: white;
     color:black;
+}
+
+
+/*Div de hora y fecha*/
+#hora-fecha{
+    position: flex;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    bottom: 20px;
+    width: 30rem;
+    margin-inline: auto;
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgb(223, 228, 228);
+    font-family: sans-serif;
+    font-size: 45px;
+    text-shadow: 0px 0px 1px black;
+    color: rgb(0, 0, 0);
 }

@@ -152,9 +152,9 @@ function empezarPomodoro(bandera){
     var boton = document.getElementsByName("comienzo")[0];
     var duracion, valor;
 
-    document.getElementById("rango1").style = "display: none";
-    document.getElementById("rango2").style = "display: none";
-    document.getElementById("rango3").style = "display: none";
+    document.getElementById("rango1").style.display = "none";
+    document.getElementById("rango2").style.display = "none";
+    document.getElementById("rango3").style.display = "none";
     document.getElementById("contadores").style.display = "block";
 
     document.getElementsByName("comienzo")[0].setAttribute("disabled", "true");
@@ -173,32 +173,32 @@ function empezarPomodoro(bandera){
     if(boton.id == "empezar"){ //El pomodoro pasa a DC y DC a pomodoro hasta los 4 pomodoros
         contadorDL++;
         document.getElementById("empezar").id = "empezarDC";
-        document.getElementById("tiempo-pomodoro").style = "display: inline-block";
-        document.getElementById("descanso-corto").style = "display: none";
-        document.getElementById("descanso-largo").style = "display: none";
+        document.getElementById("tiempo-pomodoro").style.display = "inline-block";
+        document.getElementById("descanso-corto").style.display = "none";
+        document.getElementById("descanso-largo").style.display = "none";
         duracion = document.getElementById("tiempo-pomodoro").innerHTML;
         valor = "tiempo-pomodoro";
 
     }else if(boton.id == "empezarDC"){
         if(contadorDL == 4){ //Con 4 pomodoros pasa a DL
             document.getElementById("empezarDC").id = "empezarDL";
-            document.getElementById("tiempo-pomodoro").style = "display: none";
-            document.getElementById("descanso-corto").style = "display: none";
-            document.getElementById("descanso-largo").style = "display: inline-block";
+            document.getElementById("tiempo-pomodoro").style.display = "none";
+            document.getElementById("descanso-corto").style.display = "none";
+            document.getElementById("descanso-largo").style.display = "inline-block";
             duracion = document.getElementById("descanso-largo").innerHTML;
             valor = "descanso-largo";
             contadorDL = 0;
         }else{
             document.getElementById("empezarDC").id = "empezar";
-            document.getElementById("tiempo-pomodoro").style = "display: none";
-            document.getElementById("descanso-corto").style = "display: inline-block";
-            document.getElementById("descanso-largo").style = "display: none";
+            document.getElementById("tiempo-pomodoro").style.display = "none";
+            document.getElementById("descanso-corto").style.display = "inline-block";
+            document.getElementById("descanso-largo").style.display = "none";
             duracion = document.getElementById("descanso-corto").innerHTML;
             valor = "descanso-corto";
         }
     }
 
-    document.getElementById("botones").style = "visibility: hidden";
+    document.getElementById("botones").style.visibility = "hidden";
 
     var [minutos, segundos] = duracion.split(":");
     minutos = parseInt(minutos);
@@ -212,13 +212,13 @@ function empezarPomodoro(bandera){
                 clearInterval(idPomodoro);
                 sumar(valor);
                 document.getElementsByName("comienzo")[0].removeAttribute("disabled");
-                document.getElementsByName("comienzo")[0].style = "display: inline";
-                document.getElementById("continuar").style = "display: none";
+                document.getElementsByName("comienzo")[0].style.display = "inline";
+                document.getElementById("continuar").style.display = "none";
 
                 if(valor == "descanso-largo"){ //Tras el descanso largo, el pomodoro se completa y termina
                     terminarPomodoro();
                 }else{
-                    pomodoroG();
+                    pomodoro();
                 }
             }else{
                 minutos--;
@@ -237,8 +237,8 @@ function empezarPomodoro(bandera){
 function pausarPomodoro(){
     if (typeof idPomodoro !== 'undefined'){
         clearInterval(idPomodoro);
-        document.getElementsByName("comienzo")[0].style = "display: none";
-        document.getElementById("continuar").style = "display: inline";
+        document.getElementsByName("comienzo")[0].style.display = "none";
+        document.getElementById("continuar").style.display = "inline";
         document.getElementById("continuar").removeAttribute("disabled");
 
         if(document.getElementsByName("comienzo")[0].id == "empezar"){
