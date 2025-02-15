@@ -165,9 +165,16 @@ function empezarPomodoro(bandera){
     document.getElementById("continuar").style.cursor = "not-allowed";
     document.getElementById("continuar").style.opacity = 0.6;
 
+    document.getElementById("pausar").removeAttribute("disabled");
+    document.getElementById("pausar").style.cursor = "auto";
+    document.getElementById("pausar").style.opacity = 1;
+
+
     if(bandera == 1){ // Necesario para que al pausar el pomodoro y se reanude no falle
         document.getElementById("tiempo-pomodoro").innerHTML = globalP;
         document.getElementById("descanso-corto").innerHTML = globalDC;
+    }else{
+
     }
 
     if(boton.id == "empezar"){ //El pomodoro pasa a DC y DC a pomodoro hasta los 4 pomodoros
@@ -240,6 +247,12 @@ function pausarPomodoro(){
         document.getElementsByName("comienzo")[0].style.display = "none";
         document.getElementById("continuar").style.display = "inline";
         document.getElementById("continuar").removeAttribute("disabled");
+        document.getElementById("continuar").style.cursor = "auto";
+        document.getElementById("continuar").style.opacity = 1;
+
+        document.getElementById("pausar").setAttribute("disabled", "true");
+        document.getElementById("pausar").style.cursor = "not-allowed";
+        document.getElementById("pausar").style.opacity = 0.6;
 
         if(document.getElementsByName("comienzo")[0].id == "empezar"){
             document.getElementsByName("comienzo")[0].id = "empezarDL";
